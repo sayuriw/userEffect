@@ -1,11 +1,23 @@
-import React from 'react';
+import React, {useState} from 'react';
+//import styled from 'styled-components/macro'
+import ProfilePage from './ProfilePage'
+import LoginPage from './LoginPage'
 
-function App() {
+export default function App() {
+  const [user, setUser] = useState('')
+  
+  function refreshLoginPage() {
+    setUser({}) 
+  }
   return (
-    <div>Hello World
-      
+    <div>
+      {user.password === '1234' ? (
+        <ProfilePage user={user} onLogout={refreshLoginPage}/>
+      ) : (
+        <LoginPage onSubmit={setUser} value={user} />
+      )}
     </div>
-  );
+  )
 }
 
-export default App;
+
