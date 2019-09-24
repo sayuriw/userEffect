@@ -4,12 +4,21 @@ import ProfilePage from './ProfilePage'
 import LoginPage from './LoginPage'
 
 export default function App() {
-  const [user, setUser] = useState({})
+  const [user, setUser] = useState(getFromLocalStorage('user') || {})
+  const isLoggedIn = user.password === '1234'
+  const isEmpty = user.password == null
+  
+  function getFromLocalStorage(key) {
+    const jsonString = localStorage.getItem(key)
+    let data
+    try {
+      data = JSON.parse(jsonString)
+    } catch (error) {}
+    return data
+  }
 
-  useEffect(() => {
-
-    user.password === '1234' && localStorage.setItem('user', JSON.stringify(user))
-  }, [user])
+  useEffect(() => {(isLoggedIn || isEmpty) && localStorage.setItem('user', 
+    JSON.stringify(user))}, [user, isLoggedIn, isEmpty])
     
 
   function onLogin(userData) {
